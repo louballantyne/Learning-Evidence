@@ -7,7 +7,6 @@
 #again, throw an error.
 
 class SecretDiary
-
   def initialize
     @lock = true
     @entries = []
@@ -21,6 +20,16 @@ class SecretDiary
   def get_entries
     @lock ? "Diary locked" : @entries
   end
+end
+
+
+class LockState
+
+  attr_accessor :lock
+
+  def initialize()
+    @lock = true
+  end
 
   def unlock
     @lock = false
@@ -31,3 +40,5 @@ class SecretDiary
   end
 
 end
+
+diary = SecretDiary.new
