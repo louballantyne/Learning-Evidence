@@ -5,40 +5,27 @@
 
 #When the user locks the diary, by calling `lock`, `add_entry` and `get_entries` should,
 #again, throw an error.
-
+require_relative 'lock'
 class SecretDiary
   def initialize
-    @lock = true
+    @lock = LockState.new
     @entries = []
   end
 
   def add_entry(entry)
-    return "Diary locked" if @lock
+    return "Diary locked" if (@lock.lock_state == true)
     @entries << entry
   end
 
   def get_entries
-    @lock ? "Diary locked" : @entries
-  end
-end
-
-
-class LockState
-
-  attr_accessor :lock
-
-  def initialize()
-    @lock = true
+    (@lock.lock_state == true ? "Diary locked" : @entries)
   end
 
   def unlock
-    @lock = false
+    @lock.unlock
   end
 
   def lock
-    @lock = true
+    @lock.lock
   end
-
 end
-
-diary = SecretDiary.new
